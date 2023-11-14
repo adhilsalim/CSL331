@@ -35,6 +35,7 @@ void main()
         starting_address = atoi(operand);
         LOCCTR = starting_address;
         fprintf(output_file, "\t%s\t%s\t%s\n", label, opcode, operand);
+        printf("\t%s\t%s\t%s\n", label, opcode, operand);
     }
     else
     {
@@ -128,9 +129,16 @@ void main()
 
         // write to intermediate file
         fprintf(output_file, "%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
+        printf("%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
 
         // Read the next line
         fscanf(input_file, "%s %s %s", label, opcode, operand);
+    }
+
+    if (strcmp(opcode, "END") == 0 || strcmp(opcode, "end") == 0)
+    {
+        fprintf(output_file, "%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
+        printf("%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
     }
 
     // Close files
