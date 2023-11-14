@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 void main()
 {
+    bool opcode_found = false;
     int starting_address, LOCCTR;
     char label[20], opcode[20], operand[20];
     // File pointer
@@ -32,8 +34,7 @@ void main()
     {
         starting_address = atoi(operand);
         LOCCTR = starting_address;
-        fprintf(output_file, "\t\t%s\t%s\t%s\n", label, opcode, operand);
-        printf("\t\t%s\t%s\t%s\n", label, opcode, operand);
+        fprintf(output_file, "\t%s\t%s\t%s\n", label, opcode, operand);
     }
     else
     {
@@ -69,11 +70,64 @@ void main()
                 {
                     fseek(symtab_file, 0, SEEK_END);
                     fprintf(symtab_file, "%s\t%d\n", label, LOCCTR);
-                    printf("SYMTAB: %s\t%X\n", label, LOCCTR);
                     break;
                 }
             }
         }
+
+        // search for opcode in optab
+        rewind(optab_file);
+        opcode_found = false;
+        while (!feof(optab_file))
+        {
+            char optab_opcode[20];
+            int optab_machine_code;
+
+            fscanf(optab_file, "%s %d", optab_opcode, &optab_machine_code);
+
+            // Check if label exists in symtab
+            if (strcmp(opcode, optab_opcode) == 0)
+            {
+                opcode_found = true;
+                break;
+            }
+        }
+
+        if (opcode_found)
+        {
+            LOCCTR += 3;
+        }
+        else if (strcmp(opcode, "WORD") == 0 || strcmp(opcode, "word") == 0)
+        {
+            LOCCTR += 3;
+        }
+        else if (strcmp(opcode, "RESW") == 0 || strcmp(opcode, "resw") == 0)
+        {
+            LOCCTR += 3 * atoi(operand);
+        }
+        else if (strcmp(opcode, "RESB") == 0 || strcmp(opcode, "resb") == 0)
+        {
+            LOCCTR += atoi(operand);
+        }
+        else if (strcmp(opcode, "BYTE") == 0 || strcmp(opcode, "byte") == 0)
+        {
+            if (operand[0] == 'X' || operand[0] == 'x')
+            {
+                LOCCTR += 1;
+            }
+            else
+            {
+                LOCCTR += strlen(operand) - 3;
+            }
+        }
+        else
+        {
+            printf("Error: Invalid opcode.\n");
+            exit(1);
+        }
+
+        // write to intermediate file
+        fprintf(output_file, "%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
 
         // Read the next line
         fscanf(input_file, "%s %s %s", label, opcode, operand);
