@@ -1,2 +1,5 @@
 # ignore executables
 *.exe
+
+# ignore object files
+tempCodeRunnerFile.c
