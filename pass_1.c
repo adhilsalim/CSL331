@@ -1,3 +1,8 @@
+/*
+    Location is considered as decimal value.
+    I might update it to hexadecimal later after lab exam.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +13,7 @@ void main()
     bool opcode_found = false;
     int starting_address, LOCCTR;
     char label[20], opcode[20], operand[20];
+
     // File pointer
     FILE *input_file, *output_file, *symtab_file, *optab_file;
 
@@ -34,6 +40,7 @@ void main()
     {
         starting_address = atoi(operand);
         LOCCTR = starting_address;
+
         fprintf(output_file, "\t%s\t%s\t%s\n", label, opcode, operand);
         printf("\t%s\t%s\t%s\n", label, opcode, operand);
     }
@@ -69,7 +76,7 @@ void main()
                 }
                 else
                 {
-                    fseek(symtab_file, 0, SEEK_END);
+                    fseek(symtab_file, 0, SEEK_END); // go to end of file
                     fprintf(symtab_file, "%s\t%d\n", label, LOCCTR);
                     break;
                 }
@@ -79,6 +86,8 @@ void main()
         // search for opcode in optab
         rewind(optab_file);
         opcode_found = false;
+
+        // loop through the optab file
         while (!feof(optab_file))
         {
             char optab_opcode[20];
@@ -86,7 +95,7 @@ void main()
 
             fscanf(optab_file, "%s %d", optab_opcode, &optab_machine_code);
 
-            // Check if label exists in symtab
+            // Check if opcode exists in optab
             if (strcmp(opcode, optab_opcode) == 0)
             {
                 opcode_found = true;
@@ -94,31 +103,32 @@ void main()
             }
         }
 
+        // Check if opcode exists in optab
         if (opcode_found)
         {
-            LOCCTR += 3;
+            LOCCTR += 3; // add 3 to LOCCTR
         }
         else if (strcmp(opcode, "WORD") == 0 || strcmp(opcode, "word") == 0)
         {
-            LOCCTR += 3;
+            LOCCTR += 3; // add 3 to LOCCTR
         }
         else if (strcmp(opcode, "RESW") == 0 || strcmp(opcode, "resw") == 0)
         {
-            LOCCTR += 3 * atoi(operand);
+            LOCCTR += 3 * atoi(operand); // add 3 * operand to LOCCTR
         }
         else if (strcmp(opcode, "RESB") == 0 || strcmp(opcode, "resb") == 0)
         {
-            LOCCTR += atoi(operand);
+            LOCCTR += atoi(operand); // add operand to LOCCTR
         }
         else if (strcmp(opcode, "BYTE") == 0 || strcmp(opcode, "byte") == 0)
         {
             if (operand[0] == 'X' || operand[0] == 'x')
             {
-                LOCCTR += 1;
+                LOCCTR += 1; // add 1 to LOCCTR
             }
             else
             {
-                LOCCTR += strlen(operand) - 3;
+                LOCCTR += strlen(operand) - 3; // add length of operand - 3 to LOCCTR
             }
         }
         else
@@ -135,6 +145,7 @@ void main()
         fscanf(input_file, "%s %s %s", label, opcode, operand);
     }
 
+    // Write the last line
     if (strcmp(opcode, "END") == 0 || strcmp(opcode, "end") == 0)
     {
         fprintf(output_file, "%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
