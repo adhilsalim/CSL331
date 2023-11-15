@@ -152,6 +152,9 @@ void main()
         printf("%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
     }
 
+    printf("\nIntermediate file generated.\n");
+    printf("Size of program: %d\n", LOCCTR - starting_address);
+
     // Close files
     fclose(input_file);
     fclose(output_file);
