@@ -24,6 +24,7 @@ void main()
     optab_file = fopen("optab.txt", "r");
 
     printf("PASS 1 ASSEMBLER\n");
+    printf("\nThis program considers location counter as decimal value.\n\n");
 
     // Check if file exists
     if (input_file == NULL || symtab_file == NULL || optab_file == NULL)
@@ -50,6 +51,10 @@ void main()
     }
 
     // Read the next line
+    fscanf(input_file, "%s %s %s", label, opcode, operand);
+    fprintf(output_file, "%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
+    printf("%d\t%s\t%s\t%s\n", LOCCTR, label, opcode, operand);
+
     fscanf(input_file, "%s %s %s", label, opcode, operand);
 
     // Loop through the file
