@@ -150,6 +150,8 @@ void main()
         fscanf(input_file, "%s %s %s", label, opcode, operand);
     }
 
+    LOCCTR += 3; // add 3 to LOCCTR
+
     // Write the last line
     if (strcmp(opcode, "END") == 0 || strcmp(opcode, "end") == 0)
     {
