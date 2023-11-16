@@ -27,7 +27,7 @@ void main()
     printf("\nThis program considers location counter as decimal value.\n\n");
 
     // Check if file exists
-    if (input_file == NULL || symtab_file == NULL || optab_file == NULL)
+    if (input_file == NULL || optab_file == NULL)
     {
         printf("Error opening files.\n");
         exit(1);
@@ -42,8 +42,8 @@ void main()
         starting_address = atoi(operand);
         LOCCTR = starting_address;
 
-        fprintf(output_file, "\t%s\t%s\t%s\n", label, opcode, operand);
-        printf("\t%s\t%s\t%s\n", label, opcode, operand);
+        fprintf(output_file, "-\t%s\t%s\t%s\n", label, opcode, operand);
+        printf("-\t%s\t%s\t%s\n", label, opcode, operand);
     }
     else
     {
