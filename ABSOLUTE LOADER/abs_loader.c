@@ -26,7 +26,7 @@ void main()
     fseek(input_file, 7, SEEK_SET);
     fgets(buffer, 7, input_file);
     starting_address = atoi(buffer);
-    printf("current starting address: %d\n", starting_address);
+    printf("starting address: %d\n", starting_address);
 
     // moving object code to new starting address
     printf("\n\n");
