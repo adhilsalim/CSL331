@@ -3,7 +3,3 @@
 
 # ignore object files
 tempCodeRunnerFile.c
-
-# ignore following text files
-symtab.txt
-intermediate.txt
