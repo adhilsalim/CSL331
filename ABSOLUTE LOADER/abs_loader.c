@@ -30,8 +30,8 @@ void main()
 
     // get the new starting address
     printf("Enter the new starting address: ");
-    new_starting_address = 2000; // TESTING
-    // scanf("%d", &new_starting_address);
+    // new_starting_address = 2000; // TESTING
+    scanf("%d", &new_starting_address);
 
     // check starting address
     if (new_starting_address < 1000 || new_starting_address > 9999)
