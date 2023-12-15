@@ -7,7 +7,7 @@ void main()
     // variables
     char buffer[20];
     char listing_line[200];
-    int starting_address = 0, new_starting_address = 0;
+    int starting_address = 0;
 
     // file pointer
     FILE *input_file;
@@ -28,18 +28,6 @@ void main()
     starting_address = atoi(buffer);
     printf("current starting address: %d\n", starting_address);
 
-    // get the new starting address
-    printf("Enter the new starting address: ");
-    // new_starting_address = 2000; // TESTING
-    scanf("%d", &new_starting_address);
-
-    // check starting address
-    if (new_starting_address < 1000 || new_starting_address > 9999)
-    {
-        printf("Error! Invalid starting address.\n Please enter a starting address between 1000 and 9999 (inclusive).");
-        exit(0);
-    }
-
     // moving object code to new starting address
     printf("\n\n");
 
@@ -59,11 +47,11 @@ void main()
                     continue;
                 }
 
-                printf("%d : %c%c", new_starting_address, listing_line[i], listing_line[i + 1]);
+                printf("%d : %c%c", starting_address, listing_line[i], listing_line[i + 1]);
                 printf("\n");
 
                 i++;
-                new_starting_address++;
+                starting_address++;
             }
             printf("\n");
         }
@@ -72,6 +60,5 @@ void main()
     }
 
     // close file
-    printf("\n\n");
     fclose(input_file);
 }
