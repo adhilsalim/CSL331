@@ -133,6 +133,9 @@ void main()
     fprintf(output_file, "%d\t%s\t%s\t%s\n", location_counter, label, opcode, operand);
     printf("%d\t%s\t%s\t%s\n", location_counter, label, opcode, operand);
 
+    // print the size of the program
+    printf("\nSize of the program: %d\n", location_counter - starting_address);
+
     // close file
     fclose(input_file);
     fclose(optab_file);
