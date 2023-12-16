@@ -20,7 +20,7 @@ void main()
     input_file = fopen("input.txt", "r");
     optab_file = fopen("optab.txt", "r");
     symtab_file = fopen("symtab.txt", "w+");
-    output_file = fopen("output.txt", "w");
+    output_file = fopen("intermediate.txt", "w");
 
     // check file
     if (input_file == NULL || optab_file == NULL || symtab_file == NULL || output_file == NULL)
@@ -56,9 +56,16 @@ void main()
     fscanf(input_file, "%s %s %s", label, opcode, operand);
     while (strcmp(opcode, "END") != 0)
     {
+        /*
+            NOTE:
+            Actually we have to check whether label is present in symtab_file or not.
+            If present then we have to print error message and exit.
+            But for the sake of simplicity we are not checking it here.
+        */
 
         if (strcmp(label, "-") != 0) // check if label is present
         {
+            fprintf(symtab_file, "%s\t%d\n", label, location_counter);
         }
 
         // check opcode is present in optab_file
