@@ -5,7 +5,7 @@
 void main()
 {
     // variables
-    char label[10], opcode[10], operand[10];
+    char label[10], opcode[10], operand[10], macroName[10];
 
     // file pointer
     FILE *input_file, *output_file, *mdef_file;
@@ -31,6 +31,7 @@ void main()
 
         if (strcmp(opcode, "MACRO") == 0)
         {
+            strcpy(macroName, label);
             fscanf(input_file, "%s %s %s", label, opcode, operand);
             while (strcmp(opcode, "MEND") != 0)
             {
@@ -38,8 +39,7 @@ void main()
                 fscanf(input_file, "%s %s %s", label, opcode, operand);
             }
         }
-
-        if (strcmp(opcode, "SUM") == 0)
+        if (strcmp(opcode, macroName) == 0)
         {
             rewind(mdef_file);
             fscanf(mdef_file, "%s %s %s", label, opcode, operand);
