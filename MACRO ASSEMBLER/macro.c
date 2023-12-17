@@ -51,6 +51,7 @@ void main()
             }
             fscanf(input_file, "%s %s %s", label, opcode, operand);
         }
+
         if (strcmp(opcode, "MEND") != 0)
         {
             fprintf(output_file, "%s\t%s\t%s\n", label, opcode, operand);

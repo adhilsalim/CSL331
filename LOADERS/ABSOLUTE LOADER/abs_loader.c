@@ -28,7 +28,6 @@ void main()
     starting_address = atoi(buffer);
     printf("starting address: %d\n", starting_address);
 
-    // moving object code to new starting address
     printf("\n\n");
 
     rewind(input_file);

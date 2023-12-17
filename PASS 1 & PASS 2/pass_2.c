@@ -6,7 +6,7 @@
 void main()
 {
 
-    printf("PASS 2\n");
+    printf("\n\nPASS 2\n");
 
     // variables
     char locctr[10], label[10], opcode[10], operand[10];
@@ -40,7 +40,7 @@ void main()
     fscanf(input_file, "%s %s %s %s", locctr, label, opcode, operand);
     starting_address = atoi(operand);
 
-    printf("OUTPUT:\n\n");
+    printf("\nOUTPUT:\n\n");
 
     // get the ending_address and calculating number of objects
     while (!feof(input_file))
@@ -140,7 +140,7 @@ void main()
             }
             else
             {
-                printf("Error! Opcode not found in optab!\n");
+                printf("Error!\n");
                 exit(0);
             }
         }
